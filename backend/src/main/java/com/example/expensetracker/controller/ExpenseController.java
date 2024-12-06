@@ -30,6 +30,8 @@ public class ExpenseController {
         this.userRepository = userRepository;
     }
 
+
+    //send Email for daily limit alert
     @PostMapping("/send")
     public String sendEmail(@RequestParam String email,
                             @RequestParam String subject,
@@ -50,7 +52,7 @@ public class ExpenseController {
         }
     }
     // Add a new expense
-    @PostMapping
+    @PostMapping("/addExpense")
     public Expense addExpense(@RequestParam String category,@RequestParam String userId, @RequestParam String type, @RequestParam double amount,@RequestParam LocalDate date) {
         Expense expense = new Expense(category,type, amount, date, userId);
         Optional<User> userOpt = userRepository.findById(userId);
@@ -69,8 +71,6 @@ public class ExpenseController {
         }
         else return null;
     }
-
-    // Get expenses for a specific date (daily tracking)
 
     @GetMapping("/user/{userId}")
     public List<Expense> getExpensesByUser(@PathVariable String userId) {

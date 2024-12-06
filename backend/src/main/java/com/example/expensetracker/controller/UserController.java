@@ -15,13 +15,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public User addUser(@RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam double dailyLimit) {
         User user = new User(username, password, email, dailyLimit);
         return userService.addUser(user);
     }
 
-    @GetMapping
+    @GetMapping("/getAllUsers")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }

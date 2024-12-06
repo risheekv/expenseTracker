@@ -22,15 +22,9 @@ public class ExpenseService {
     }
 
     public Expense addExpense(Expense expense) {
-        double dailySpend=0,spendLimit=0;
-        List<Expense> dailyExpenses = getExpensesByDate(expense.getDate());
-        for(Expense e:dailyExpenses){
-            if(e.getUserId() == expense.getUserId()) dailySpend+=e.getAmount();
-        }
         Expense savedExpense = expenseRepository.save(expense);
 
         Optional<User> userOpt = userRepository.findById(expense.getUserId());
-        if(userOpt.isPresent()) spendLimit = userOpt.get().getDailyLimit();
         userOpt.get().addExpenseId(savedExpense.getId());
         userRepository.save(userOpt.get());
 
